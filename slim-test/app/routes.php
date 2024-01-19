@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\Login\HomePageAction;
+use App\Application\Actions\Login\JWTAction;
+use App\Application\Actions\Login\LoggingAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
 use App\Application\Actions\Login\LoginAction;
@@ -21,14 +24,11 @@ return function (App $app) {
         return $response;
     });
 
-	$app->get('/hello-world', function (Request $req, Response $res) {
-		$res->getBody()->write('IS WORKING ! :D');
-		return $res;
-	});
-
-	//
+	// Login Class
 	$app->group('/login', function (Group $group) {
-		$group->get('', LoginAction::class);
+		$group->get('', HomePageAction::class);
+		$group->get('/logging', LoggingAction::class);
+		$group->post('/logging', JWTAction::class);
 	});
 
     $app->group('/users', function (Group $group) {
