@@ -1,1 +1,3 @@
 vendor
+/sso-php/public.pem
+/sso-php/.env
