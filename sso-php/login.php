@@ -12,9 +12,9 @@ $keycloakConfig = [
 	'clientId'                => $env['CLIENT_ID'],
 	'clientSecret'            => $env['CLIENT_SECRET'],
 	'redirectUri'             => 'http://localhost:8080/login.php',
-	'authorizationEndpoint'   => 'https://auth.arda.wf/realms/stargate/protocol/openid-connect/auth',
-	'tokenEndpoint'           => 'https://auth.arda.wf/realms/stargate/protocol/openid-connect/token',
-	'tokenKeysEndpoint'		  => 'https://auth.arda.wf/realms/stargate/protocol/openid-connect/certs',
+	'authorizationEndpoint'   => $env['AUTH_ENDPOINT'],
+	'tokenEndpoint'           => $env['TOKEN_ENDPOINT'],
+	'tokenKeysEndpoint'		  => $env['TOKEN_KEYS_ENDPOINT'],
 ];
 
 // Vérifier si nous avons le code d'authentification
@@ -87,6 +87,10 @@ function getToken($code)
 // Fonction pour recupérer les certificats de openidconnect
 function getCerts()
 {
+	global $keycloakConfig;
+
+	$tokenKeysEndpoint = $keycloakConfig['tokenKeysEndpoint'];
+
 	$options = [
 		'http' => [
 			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -96,7 +100,7 @@ function getCerts()
 	];
 
 	$context  = stream_context_create($options);
-	$response = file_get_contents("https://auth.arda.wf/realms/stargate/protocol/openid-connect/certs", false, $context);
+	$response = file_get_contents($tokenKeysEndpoint, false, $context);
 
 	error_log('- Response Certs -');
 	error_log(print_r($response, true));
