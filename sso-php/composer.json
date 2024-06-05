@@ -1,9 +1,9 @@
 {
-    "name": "anordmann/php-from-scratch-2",
+    "name": "xtiix/sso-php",
     "authors": [
         {
-            "name": "anordmann",
-            "email": "anordmann@nomotech.com"
+            "name": "xtiix",
+            "email": ""
         }
     ],
     "require": {
